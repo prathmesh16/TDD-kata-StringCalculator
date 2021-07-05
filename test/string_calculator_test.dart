@@ -87,13 +87,15 @@ class StringCalculator {
     }
 
     if(numbers.length >= 2 && numbers.substring(0,2) != "//") {
-      List<String> nos = numbers.split(RegExp(r',|\n'));
+      List<String> nos = getNumbers(numbers, r',|\n');
       return getSum(nos);
     }
 
     return getSumWithCustomDelimeter(numbers);
   }
-
+  List<String> getNumbers(String numbers,String delimeterPattern) {
+    return numbers.split(RegExp(delimeterPattern));
+  }
   void checkNegatives(List<String> numbers) {
     String negativeNumbers = "";
     numbers.forEach((number) { 
@@ -151,12 +153,12 @@ class StringCalculator {
         delimeters.forEach((delimeter) {
           pattern += delimeter+'|';
         });
-        numbers = data[1].split(RegExp(r''+pattern.substring(0,pattern.length-1)));
+        numbers = getNumbers(data[1], r''+pattern.substring(0,pattern.length-1));
       }
       else {
         //single delimeter without []
         delimeters.add(data[0].substring(2));
-        numbers = data[1].split(delimeters[0]);
+        numbers = getNumbers(data[1], delimeters[0]);
       }
     }
     else {
